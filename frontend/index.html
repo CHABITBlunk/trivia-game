@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How Bad Are You at CS370?</title>
+  </head>
+  <body>
+    <!--start-->
+    <div class="div start">
+      <h2 class="h2 start__welcome">
+        Welcome to "How Bad Are You at CS370", a game for students ready
+        to be shocked!
+      </h2>
+
+      <p class="p start__link">
+        Click here to learn how to play the game!
+      </p>
+
+      <p class="p start__link">
+        Click here to configure your PiShock!
+      </p>
+    </div>
+
+    <!--help-->
+    <div class="div help">
+      <!--TODO: write up a semi-decent help section when the chance arises-->
+      <h2 class="h2 help__header">Help/How-to</h2>
+      <p class="p help__content"></p>
+    </div>
+
+    <!--pishock config-->
+    <div class="div pishock-config">
+      <div class="div pishock-info"></div>
+      <button class="btn pishock-config__test">Test PiShock Settings</button>
+      <button class="btn pishock-config__beep">Beep PiShock</button>
+      <button class="btn pishock-config__code">Reveal PiShock Code</button>
+    </div>
+
+    <!--player count-->
+    <div class="div player-count">
+      <h3 class="h3 player-count__number">Number of players:</h3>
+      <div class="div player-count__player-list"></div>
+      <button class="btn player-count__test">Test PiShock</button>
+    </div>
+
+    <!--when not player's turn-->
+    <div class="div not-player-turn">
+      <h4 class="h4 not-player-turn__name">Name:</p>
+      <h4 class="h4 not-player-turn__score">Score:</p>
+      <h4 class="h4 not-player-turn__turn">Turn:</p>
+    </div>
+
+    <!--when player's turn-->
+    <div class="div player-turn">
+      <h4 class="h4 player-turn__name">Name:</p>
+      <h4 class="h4 player-turn__score">Score:</p>
+      <div class="div player-turn__question"></div>
+    </div>
+
+    <!--when player chooses correct answer-->
+    <div class="div correct-answer">
+      <h3 class="h3 correct-answer__message">Congratulations! You got it right!</h3>
+    </div>
+
+    <!--when player chooses incorrect answer-->
+    <div class="incorrect-answer">
+      <h3 class="h3 incorrect-answer__message">Incorrect! Better luck next time!</h3>
+      <!--TODO: insert image once received-->
+    </div>
+
+    <!--end game-->
+    <div class="div end-game">
+      <div class="div end-game__scoreboard"></div>
+      <div class="div end-game__most-incorrect"></div>
+      <p class="p end-game__link">Return home</p>
+    </div>
+  </body>
+</html>
