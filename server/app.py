@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from game_logic import *
 import csv
 import random
+from flask import Flask, render_template, request, redirect, url_for, session
+from game_logic import *
 
 # List of questions
 
@@ -15,49 +15,31 @@ players = {}
 
 app = Flask(__name__)
 
-
-# Intro Screen
-@app.route("/")
-def index():
-    return render_template("intro.html")
-
-
-# Help Screen
-@app.route("/help")
-def help():
-    return render_template("help.html")
-
-
-# Configuration Screen
 @app.route("/config", methods=["GET", "POST"])
 def config():
+    """config screen"""
     if request.method == "POST":
         # Save Pishock Setting and move to player select
         return redirect(url_for("player_select"))
     return render_template("config.html")
 
 
-# Player Select Screen
 app.route("/player_select", methods=["GET", "POST"])
-
-
 def player_select():
+    """select player"""
     # Store Player Information
-    if request.method == "POST":
-        return redirect(url_for("turn_announcement"))
-    return render_template("player_select.html")
+    pass
 
 
-# Turn Announcement Screen
 def turn_announcement():
+    """see whose turn it is"""
     # See who turn it is and display it
     return render_template("turn_announcement.html", player_id="Insert_id_here")
 
 
-# Question Screen
 @app.route("/question", methods=["GET", "POST"])
 def question():
-
+    """question screen"""
     if request.method == "POST" and "end_game" in request.form:
         # If request to end game, redirect to scoring page
         return redirect(url_for("scoring"))
@@ -69,16 +51,15 @@ def question():
     # No More question go to scoring
 
 
-# Scoring Page
 @app.route("/scoring")
 def scoring():
-    # Display scores and other game end details
+    """send scores"""
     return render_template("scoring.html", scores=session.get("player_scores", {}))
 
 
-# Rarly termination and and redirect to scoring
 @app.route("/end_game", methods=["POST"])
 def end_game():
+    """end game, send scores"""
 
     return redirect(url_for("scoring"))
 
