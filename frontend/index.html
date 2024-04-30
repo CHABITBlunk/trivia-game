@@ -4,20 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>How Bad Are You at CS370?</title>
+    <!--jquery-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!--axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--my script-->
+    <script type="text/javascript" src="./main.js"></script>
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <!--start-->
     <div class="div start">
       <h2 class="h2 start__welcome">
-        Welcome to "How Bad Are You at CS370", a game for students ready
+        Welcome to "How Bad Are You at CS370?", a game for students ready
         to be shocked!
       </h2>
 
-      <p class="p start__link">
+      <p class="p-link start__link js-help">
         Click here to learn how to play the game!
       </p>
 
-      <p class="p start__link">
+      <p class="p-link start__link js-pishock-config">
         Click here to configure your PiShock!
       </p>
     </div>
@@ -27,6 +34,7 @@
       <!--TODO: write up a semi-decent help section when the chance arises-->
       <h2 class="h2 help__header">Help/How-to</h2>
       <p class="p help__content"></p>
+      <p class="p-link help__link">Return home</p>
     </div>
 
     <!--pishock config-->
@@ -61,6 +69,7 @@
     <!--when player chooses correct answer-->
     <div class="div correct-answer">
       <h3 class="h3 correct-answer__message">Congratulations! You got it right!</h3>
+      <!--TODO: insert image once received-->
     </div>
 
     <!--when player chooses incorrect answer-->
@@ -71,9 +80,10 @@
 
     <!--end game-->
     <div class="div end-game">
+      <h3 class="h3 end-game__title">Game over!</h3>
       <div class="div end-game__scoreboard"></div>
       <div class="div end-game__most-incorrect"></div>
-      <p class="p end-game__link">Return home</p>
+      <p class="p-link end-game__link">Return home</p>
     </div>
   </body>
 </html>
