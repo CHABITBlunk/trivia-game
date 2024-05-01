@@ -2,11 +2,15 @@ import random
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from game_logic import send_pi_shock_command, load_questions
 
+__name__ = "main"
+
 # List of questions
 questions = load_questions("./questions.csv")
 
 # Each player Object
-players = {}
+players = {
+    "habit": {"name": "habit", "pi_shock_setting": {}, "pi_shock_code": "2C48E5F36C4"}
+}
 
 # Current question index
 question_index = 0
