@@ -1,7 +1,6 @@
 """backend game logic"""
 
 import random
-import requests
 import csv  # Need this for csv.DictReader
 
 # Game logic functions
@@ -99,9 +98,6 @@ def send_pi_shock_command(self, op, duration, intensity=None):
     }
     if intensity is not None:
         payload["Intensity"] = intensity
-
-    response = requests.post(self.base_url, json=payload, headers=self.headers)
-    print(response.text)
 
 
 # Repopulation Question, and maybe keep player / pishock info

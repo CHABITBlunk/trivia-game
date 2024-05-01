@@ -1,4 +1,4 @@
-// TODO: find ip address to and put it at the beginning of each axios request url
+// TODO: find raspberry pi ip and put it at the beginning of each axios request url
 let ended = true;
 let numCorrect = 0,
   numIncorrect = 0;
@@ -21,7 +21,6 @@ $(document).ready(() => {
   $(".js-return-start").on("click", () => {
     $("div").not(".start").hide();
     $(".start").show();
-    // TODO: if parent element is game over, clear questions
   });
 
   // start game
@@ -35,15 +34,21 @@ $(document).ready(() => {
     /*
     axios
       .get("/question")
-      .then((response) => {
-        $(".game__problem").append(
-          createQuestion(
-            response.data.question,
-            response.data.answers,
-            response.data.correct,
-            response.data.ended,
-          ),
-        );
+      .then((response) => { 
+        ended = response.data.ended
+        if (ended) {
+          $("div").not(".end-game").hide();
+          $(".end-game").show();
+          $(".js-num-correct").text(`Number correct: ${numCorrect}`);
+          $(".js-num-incorrect").text(`Number incorrect: ${numIncorrect}`);
+        } else {
+          $(".game__problem").append(createQuestion(
+              response.data.question,
+              response.data.answers,
+              response.data.correct,
+            ),
+          );
+        }
       })
       .catch((error) => {
         $(".game__problem").append("<p>Error: problem did not load</p>");
@@ -64,6 +69,28 @@ $(document).ready(() => {
       $(".game__problem .question:first").remove();
       appendQuestion(); // TODO: switch this with the axios request once we test
     }
+  });
+
+  // test pishock beep
+  $(".pishock-config__beep").on("click", {
+    axios.get("/beep").then((response) => {
+      alert("success!");
+      console.log(response);
+    }).catch((error) => {
+      alert("error");
+      console.log(error);
+    })
+  });
+
+  // test pishock settings
+  $(".pishock-config__test").on("click", {
+    axios.get("/shock").then((response) => {
+      alert("success!");
+      console.log(response);
+    }).catch((error) => {
+      alert("error");
+      console.log(error);
+    })
   });
 
   // send pishock config to backend after clicking save button
@@ -129,5 +156,7 @@ const appendQuestion = (
       // make http request to shock user
       axios.get("/shock");
     }
+    // TODO: test clearing question
+    $(".game__problem").empty();
   });
 };

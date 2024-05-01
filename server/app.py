@@ -1,10 +1,9 @@
-import csv
 import random
-from flask import Flask, render_template, request, redirect, url_for, session
-from game_logic import *
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from game_logic import send_pi_shock_command, load_questions
 
 # List of questions
-questions = load_questions("server\questions.csv")
+questions = load_questions("./questions.csv")
 
 # Each player Object
 players = {}
@@ -34,6 +33,15 @@ def config():
 app.route("/player_select", methods=["GET", "POST"])
 
 
+@app.route("/beep", methods=["GET"])
+def beep():
+    """beep pishock"""
+    send_pi_shock_command(players["habit"].pi_shock_code, 2, 1)
+    response = jsonify({"status": "success", "message": "Request successful"})
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
 def player_select():
     """select player"""
     # Store Player Information
@@ -61,7 +69,7 @@ def question():
         }
     else:
         response = {"data": {"ended": True}}
-    return  ####
+    return response
 
 
 @app.route("/shock_user", methods=["GET"])
@@ -70,23 +78,13 @@ def shock_user():
     if current_player in players:
         player = players[current_player]
         send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
-        return "Command Sent"
+        response = jsonify({"status": "success", "message": "Request successful"})
+        response.headers["Content-Type"] = "application/json"
     else:
-        return "Player not found"
+        response = jsonify({"status": "failure", "message": "Request failure"})
+        response.headers["Content-Type"] = "application/json"
+    return response
 
 
-@app.route("/scoring")
-def scoring():
-    """send scores"""
-    return render_template("scoring.html", scores=session.get("player_scores", {}))
-
-
-@app.route("/end_game", methods=["POST"])
-def end_game():
-    """end game, send scores"""
-
-    return redirect(url_for("scoring"))
-
-
-if __name__ == "__main__":
+if __name__ == "main":
     app.run(debug=True)
