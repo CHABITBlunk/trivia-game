@@ -9,6 +9,7 @@ class Player:
         pi_shock_code (str): Unique code to identify the PiShock device for this player.
         intensity_scale (bool): determine if intensity scales with incorrect answers.
     """
+
     def __init__(self, name, pi_shock_code, pi_shock_setting=(0, 0, 0)):
         self.player_name = name
         self.player_score = 0
@@ -49,6 +50,7 @@ class PiShockConfig:
         base_url (str): Base URL for the PiShock API operations.
         headers (dict): Headers to be used for API requests, defaulting to JSON content type.
     """
+
     def __init__(
         self,
         username,

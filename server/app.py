@@ -40,7 +40,7 @@ app.route("/player_select", methods=["GET", "POST"])
 @app.route("/beep", methods=["GET"])
 def beep():
     """beep pishock"""
-    send_pi_shock_command(players["habit"].pi_shock_code, 2, 1)
+    send_pi_shock_command(players["habit"]["pi_shock_code"], 2, 1)
     response = jsonify({"status": "success", "message": "Request successful"})
     response.headers["Content-Type"] = "application/json"
     return response
