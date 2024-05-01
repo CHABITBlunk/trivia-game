@@ -22,6 +22,7 @@
         Welcome to "Zap Trivia Challenge", a game for students ready to be
         shocked!
       </h2>
+      <img src="./img/home.jpg" alt="home" />
       <p class="p-link js-help">Click here to learn how to play the game!</p>
       <p class="p-link js-pishock-config">
         Click here to configure your PiShock!
@@ -39,12 +40,14 @@
 
     <!--pishock config-->
     <div class="div pishock-config">
-      <p>Operation</p>
-      <input type="text" class="input pishock-config-operation" />
-      <p>Duration</p>
-      <input type="text" class="input pishock-config-duration" />
-      <p>Intensity</p>
-      <input type="text" class="input pishock-config-intensity" />
+      <label for="name">Name</label>
+      <input type="text" class="input pishock-config__name" />
+      <label for="operation">Operation</label>
+      <input type="number" class="input pishock-config__operation" />
+      <label for="duration">Duration</label>
+      <input type="number" class="input pishock-config__duration" />
+      <label for="intensity">Intensity</label>
+      <input type="number" class="input pishock-config__intensity" />
       <button class="btn pishock-config__test">Test PiShock Settings</button>
       <button class="btn pishock-config__beep">Beep PiShock</button>
       <button class="btn pishock-config__code">Reveal PiShock Code</button>
@@ -64,30 +67,28 @@
       <h4 class="game__player-name">Name:</h4>
       <h4 class="game__player-score">Score:</h4>
       <!--render when player's turn-->
-      <div class="game__problem"></div>
+      <div class="div game__problem"></div>
     </div>
 
     <!--when player chooses correct answer-->
-    <div class="div correct-answer">
-      <h3 class="h3 correct-answer__message">
-        Congratulations! You got it right!
-      </h3>
-      <!--TODO: insert image once received-->
+    <div class="div correct">
+      <h3 class="h3 correct__message">Congratulations! You got it right!</h3>
+      <p class="p-link continue">Continue</p>
     </div>
 
     <!--when player chooses incorrect answer-->
-    <div class="div incorrect-answer">
-      <h3 class="h3 incorrect-answer__message">
-        Incorrect! Better luck next time!
-      </h3>
-      <!--TODO: insert image once received-->
+    <div class="div incorrect">
+      <h3 class="h3 incorrect__message">Incorrect! Better luck next time!</h3>
+      <img src="./img/incorrect.jpg" alt="zap" />
+      <p class="p-link continue">Continue</p>
     </div>
 
     <!--end game-->
     <div class="div end-game">
       <h3 class="h3 end-game__title">Game over!</h3>
-      <div class="div end-game__scoreboard"></div>
-      <div class="div end-game__most-incorrect"></div>
+      <img src="./img/scoreboard.jpg" alt="scoreboard" />
+      <p class="js-num-correct">Number correct:</p>
+      <p class="js-num-incorrect">Number incorrect:</p>
       <p class="p-link js-return-start">Return home</p>
     </div>
   </body>
