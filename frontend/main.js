@@ -1,42 +1,65 @@
-const axios = require("axios");
-
 // TODO: find ip address to and put it at the beginning of each axios request url
-
+let ended = true;
+let numCorrect = 0,
+  numIncorrect = 0;
+let name = "";
 $(document).ready(() => {
   // start of game, only render start
-  $(".div").not(".start").hide();
-
-  let ended = true;
-  let numCorrect = 0,
-    numIncorrect = 0;
-  let name = "";
+  $("div").not(".start").hide();
 
   // show help
   $(".js-help").on("click", () => {
-    $(".div").not(".help").hide();
+    $("div").not(".help").hide();
     $(".help").show();
   });
-
   // show pishock config
   $(".js-pishock-config").on("click", () => {
-    $(".div").not(".pishock-config").hide();
+    $("div").not(".pishock-config").hide();
     $(".pishock-config").show();
   });
   // return home
   $(".js-return-start").on("click", () => {
-    $(".div").not(".start").hide();
+    $("div").not(".start").hide();
     $(".start").show();
+    // TODO: if parent element is game over, clear questions
+  });
+
+  // start game
+  $(".js-start-game").on("click", () => {
+    $("div").not(".game").hide();
+    $(".game").show();
+    $(".game__player-name").text(`Name: ${name}`);
+    $(".game__player-score").text(`Score: ${numCorrect}`);
+    appendQuestion();
+    // axios request for a question. TODO: test tomorrow
+    /*
+    axios
+      .get("/question")
+      .then((response) => {
+        $(".game__problem").append(
+          createQuestion(
+            response.data.question,
+            response.data.answers,
+            response.data.correct,
+            response.data.ended,
+          ),
+        );
+      })
+      .catch((error) => {
+        $(".game__problem").append("<p>Error: problem did not load</p>");
+      });
+    */
   });
 
   // continue after submitting
   $(".continue").on("click", () => {
     if (ended) {
-      $(".div").not(".end-game").hide();
+      $("div").not(".end-game").hide();
       $(".end-game").show();
       $(".js-num-correct").text(`Number correct: ${numCorrect}`);
       $(".js-num-incorrect").text(`Number incorrect: ${numIncorrect}`);
     } else {
-      $(".div").not(".game").hide();
+      $("div").not(".game").hide();
       $("game").show();
       $(".game__problem .question:first").remove();
       appendQuestion(); // TODO: switch this with the axios request once we test
@@ -60,44 +83,6 @@ $(document).ready(() => {
         console.log(error);
       });
   });
-
-  // start game
-  $(".js-start-game").on("click", () => {
-    $(".div").not(".game").hide();
-    $(".game").show();
-    $(".game__player-name").text(`Name: ${name}`);
-    appendQuestion();
-    // axios request for a question. TODO: test tomorrow
-    /*
-    axios
-      .get("/question")
-      .then((response) => {
-        $(".game__problem").append(
-          createQuestion(
-            response.data.question,
-            response.data.answers,
-            response.data.correct,
-            response.data.ended,
-          ),
-        );
-      })
-      .catch((error) => {
-        $(".game__problem").append("<p>Error: problem did not load</p>");
-      });
-    */
-    // submit answer
-    $(".js-submit-answer").on("click", () => {
-      if ($(".game__problem__answer:checked").attr("id") == "correct") {
-        $(".div").not(".correct").hide();
-        $(".correct-answer").show();
-      } else {
-        $(".div").not(".incorrect").hide();
-        $(".incorrect").show();
-        // make http request to shock user
-        axios.get("/shock");
-      }
-    });
-  });
 });
 
 // fisher-yates shuffle
@@ -117,11 +102,32 @@ const appendQuestion = (
   answers = ["5", "4", "3", "Unsure"],
   correct = "4",
 ) => {
-  let html = `<div class="question"> <p class="p game__problem__question">${question}</p>`;
+  $(".game__problem").show();
+  let html = `<form class="question"> <p class="p game__problem__question">${question}</p>`;
   shuffle(answers);
   answers.forEach((answer) => {
-    html += `<input type="radio" id="${answer === correct ? "correct" : "incorrect"}" class="game__problem__answer" value="${answer}" />`;
+    html += `<label for="${answer}">${answer}</label>`;
+    html += `<input type="radio" name="answer" id="${answer === correct ? "correct" : "incorrect"}" class="game__problem__answer" value="${answer}" />`;
   });
-  html += `<button class="btn js-submit-answer">Submit answer</button> </div>`;
+  html += `<input type="submit" value="Submit answer" />`;
   $(".game__problem").append(html);
+  $(".question").show();
+
+  // submit answer click logic
+  $(".question").on("submit", (event) => {
+    event.preventDefault();
+    if ($("#correct").is(":checked")) {
+      console.log("correct");
+      numCorrect++;
+      $("div").not(".correct").hide();
+      $(".correct").show();
+    } else if ($("#incorrect").is(":checked")) {
+      console.log("incorrect");
+      numIncorrect++;
+      $("div").not(".incorrect").hide();
+      $(".incorrect").show();
+      // make http request to shock user
+      axios.get("/shock");
+    }
+  });
 };
