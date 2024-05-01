@@ -19,4 +19,36 @@ $(document).ready(() => {
     $("div").not(".start").hide();
     $(".start").show();
   });
+
+  // send pishock config to backend after clicking save button
+  $(".js-save").on("click", () => {
+    axios
+      .post("/user/pishock-config", {
+        operation: $(".pishock-config-operation").val(),
+        duration: $(".pishock-config-duration").val(),
+        intensity: $(".pishock-config-intensity").val(),
+      })
+      .then((response) => {
+        console.log("successful", response.data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  });
+
+  // start game
+  $(".js-start-game").on("click", () => {
+    $("div").not(".game").hide();
+    $(".game").show();
+    // axios request for a question
+    axios
+      .get("/game/question")
+      .then((response) => {})
+      .catch((error) => {});
+  });
 });
+
+// create the html for a problem, including question and answers
+const createQuestion = (question, answers, correctAnswer) => {
+  return `<p class="p game__problem__question">${question}</p>`;
+};

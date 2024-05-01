@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>How Bad Are You at CS370?</title>
     <!--jquery-->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-latest.min.js"
+    ></script>
     <!--axios-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!--my script-->
     <script type="text/javascript" src="./main.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <!--start-->
     <div class="div start">
       <h2 class="h2 start__welcome">
-        Welcome to "How Bad Are You at CS370?", a game for students ready
-        to be shocked!
+        Welcome to "How Bad Are You at CS370?", a game for students ready to be
+        shocked!
       </h2>
-
-      <p class="p-link js-help">
-        Click here to learn how to play the game!
-      </p>
+      <p class="p-link js-help">Click here to learn how to play the game!</p>
       <p class="p-link js-pishock-config">
         Click here to configure your PiShock!
       </p>
+      <p class="p-link js-start-game">Start game</p>
     </div>
 
     <!--help-->
@@ -38,11 +39,16 @@
 
     <!--pishock config-->
     <div class="div pishock-config">
-      <div class="div pishock-info"></div>
+      <p>Operation</p>
+      <input type="text" class="input pishock-config-operation" />
+      <p>Duration</p>
+      <input type="text" class="input pishock-config-duration" />
+      <p>Intensity</p>
+      <input type="text" class="input pishock-config-intensity" />
       <button class="btn pishock-config__test">Test PiShock Settings</button>
       <button class="btn pishock-config__beep">Beep PiShock</button>
       <button class="btn pishock-config__code">Reveal PiShock Code</button>
-      <p class="p-link js-save-continue">Save and continue</p>
+      <button class="btn js-save">Save</button>
       <p class="p-link js-return-start">Return home</p>
     </div>
 
@@ -53,29 +59,27 @@
       <button class="btn player-count__test">Test PiShock</button>
     </div>
 
-    <!--when not player's turn-->
-    <div class="div not-player-turn">
-      <h4 class="h4 not-player-turn__name">Name:</p>
-      <h4 class="h4 not-player-turn__score">Score:</p>
-      <h4 class="h4 not-player-turn__turn">Turn:</p>
-    </div>
-
-    <!--when player's turn-->
-    <div class="div player-turn">
-      <h4 class="h4 player-turn__name">Name:</p>
-      <h4 class="h4 player-turn__score">Score:</p>
-      <div class="div player-turn__question"></div>
+    <!--game-->
+    <div class="div game">
+      <h4 class="game__player-name">Name:</h4>
+      <h4 class="game__player_score">Score:</h4>
+      <!--render when player's turn-->
+      <div class="game__problem"></div>
     </div>
 
     <!--when player chooses correct answer-->
     <div class="div correct-answer">
-      <h3 class="h3 correct-answer__message">Congratulations! You got it right!</h3>
+      <h3 class="h3 correct-answer__message">
+        Congratulations! You got it right!
+      </h3>
       <!--TODO: insert image once received-->
     </div>
 
     <!--when player chooses incorrect answer-->
     <div class="div incorrect-answer">
-      <h3 class="h3 incorrect-answer__message">Incorrect! Better luck next time!</h3>
+      <h3 class="h3 incorrect-answer__message">
+        Incorrect! Better luck next time!
+      </h3>
       <!--TODO: insert image once received-->
     </div>
 
