@@ -40,7 +40,8 @@ app.route("/player_select", methods=["GET", "POST"])
 @app.route("/beep", methods=["GET"])
 def beep():
     """beep pishock"""
-    send_pi_shock_command(players["habit"]["pi_shock_code"], 2, 1)
+    current_player = request.json["name"]
+    send_pi_shock_command(players[current_player]["pi_shock_code"], 2, 1)
     response = jsonify({"status": "success", "message": "Request successful"})
     response.headers["Content-Type"] = "application/json"
     return response
@@ -79,15 +80,15 @@ def question():
 
 @app.route("/shock_user", methods=["GET"])
 def shock_user():
-    # global current_player
-    # if current_player in players:
-    # player = players[current_player]
-    send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
-    response = jsonify({"status": "success", "message": "Request successful"})
-    response.headers["Content-Type"] = "application/json"
-    # else:
-    # response = jsonify({"status": "failure", "message": "Request failure"})
-    # response.headers["Content-Type"] = "application/json"
+    current_player = request.json["name"]
+    if current_player in players:
+        player = players[current_player]
+        send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
+        response = jsonify({"status": "success", "message": "Request successful"})
+        response.headers["Content-Type"] = "application/json"
+    else:
+        response = jsonify({"status": "failure", "message": "Request failure"})
+        response.headers["Content-Type"] = "application/json"
     return response
 
 

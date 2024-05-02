@@ -72,7 +72,9 @@ $(document).ready(() => {
   // test pishock settings
   $(".pishock-config__test").on("click", () => {
     axios
-      .get("http://10.84.133.7:5000/shock")
+      .get("http://10.84.133.7:5000/shock_user", {
+        name: name,
+      })
       .then((response) => {
         alert("success!");
         console.log(response);
@@ -159,7 +161,9 @@ const appendQuestion = (
       $("div").not(".incorrect").hide();
       $(".incorrect").show();
       // make http request to shock user
-      axios.get("http://10.84.133.7:5000/shock");
+      axios.get("http://10.84.133.7:5000/shock_user", {
+        name: name,
+      });
     }
     // clear quesetion after submit
     $(".game__problem").empty();
