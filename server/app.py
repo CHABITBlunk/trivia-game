@@ -68,9 +68,9 @@ def shock_user():
         player = players[name]
         send_pi_shock_command(
             player["pi_shock_code"],
-            player["operation"],
-            player["duration"],
-            player["intensity"],
+            0,
+            1,
+            20,
         )
         return jsonify({"status": "success", "message": "Shock sent"}), 200
     return jsonify({"status": "failure", "message": "Player not found"}), 404
