@@ -17,7 +17,7 @@ players = {
 question_index = 0
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["CORS_LOG"] = True
 
 
