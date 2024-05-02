@@ -66,7 +66,7 @@ def question():
         response = {
             "data": {
                 "question": current_question["question"],
-                "answer": current_question["answer"],
+                "answers": current_question["answers"],
                 "correct": current_question["correct"],
                 "ended": False,
             }
