@@ -28,10 +28,11 @@ def config():
     intensity = config_data["intensity"]
 
     if player_name in players:
-        players[player_name]["pi_shock_setting"] = (operation, duration, intensity)
+        players[player_name]["operation"] = operation
+        players[player_name]["duration"] = duration
+        players[player_name]["intensity"] = intensity
         return "Player found"
-    else:
-        return "Player not found"
+    return "Player not found"
 
 
 app.route("/player_select", methods=["GET", "POST"])
@@ -83,7 +84,7 @@ def shock_user():
     current_player = request.json["name"]
     if current_player in players:
         player = players[current_player]
-        send_pi_shock_command(player["pi_shock_code"], *player["pi_shock_setting"])
+        send_pi_shock_command(player["pi_shock_code"], player["pi_shock_setting"])
         response = jsonify({"status": "success", "message": "Request successful"})
         response.headers["Content-Type"] = "application/json"
     else:
