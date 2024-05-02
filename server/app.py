@@ -83,7 +83,7 @@ def shock_user():
     current_player = request.json["name"]
     if current_player in players:
         player = players[current_player]
-        send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
+        send_pi_shock_command(player["pi_shock_code", *player["pi_shock_setting"])
         response = jsonify({"status": "success", "message": "Request successful"})
         response.headers["Content-Type"] = "application/json"
     else:
