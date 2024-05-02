@@ -114,4 +114,4 @@ def shock_user():
 
 
 if __name__ == "main":
-    app.run(debug=True)
+    app.run(host="192.168.224.157", debug=True)
