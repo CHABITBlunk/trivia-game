@@ -62,7 +62,7 @@ def turn_announcement():
 def question():
     """question screen"""
     if question_index < len(questions):
-        current_question = question[question_index]
+        current_question = questions[question_index]
         response = {
             "data": {
                 "question": current_question["question"],

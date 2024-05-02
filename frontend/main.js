@@ -31,18 +31,18 @@ $(document).ready(() => {
     $(".game__player-score").text(`Score: ${numCorrect}`);
     appendQuestion();
     // axios request for a question. TODO: test tomorrow
-    /*
     axios
-      .get("/question")
-      .then((response) => { 
-        ended = response.data.ended
+      .get("http://10.84.133.7:5050/question")
+      .then((response) => {
+        ended = response.data.ended;
         if (ended) {
           $("div").not(".end-game").hide();
           $(".end-game").show();
           $(".js-num-correct").text(`Number correct: ${numCorrect}`);
           $(".js-num-incorrect").text(`Number incorrect: ${numIncorrect}`);
         } else {
-          $(".game__problem").append(createQuestion(
+          $(".game__problem").append(
+            createQuestion(
               response.data.question,
               response.data.answers,
               response.data.correct,
@@ -53,44 +53,34 @@ $(document).ready(() => {
       .catch((error) => {
         $(".game__problem").append("<p>Error: problem did not load</p>");
       });
-    */
-  });
-
-  // continue after submitting
-  $(".continue").on("click", () => {
-    if (ended) {
-      $("div").not(".end-game").hide();
-      $(".end-game").show();
-      $(".js-num-correct").text(`Number correct: ${numCorrect}`);
-      $(".js-num-incorrect").text(`Number incorrect: ${numIncorrect}`);
-    } else {
-      $("div").not(".game").hide();
-      $("game").show();
-      $(".game__problem .question:first").remove();
-      appendQuestion(); // TODO: switch this with the axios request once we test
-    }
   });
 
   // test pishock beep
-  $(".pishock-config__beep").on("click", {
-    axios.get("/beep").then((response) => {
-      alert("success!");
-      console.log(response);
-    }).catch((error) => {
-      alert("error");
-      console.log(error);
-    })
+  $(".pishock-config__beep").on("click", () => {
+    axios
+      .get("http://10.84.133.7:5000/beep")
+      .then((response) => {
+        alert("success!");
+        console.log(response);
+      })
+      .catch((error) => {
+        alert("error");
+        console.log(error);
+      });
   });
 
   // test pishock settings
-  $(".pishock-config__test").on("click", {
-    axios.get("/shock").then((response) => {
-      alert("success!");
-      console.log(response);
-    }).catch((error) => {
-      alert("error");
-      console.log(error);
-    })
+  $(".pishock-config__test").on("click", () => {
+    axios
+      .get("http://10.84.133.7:5000/shock")
+      .then((response) => {
+        alert("success!");
+        console.log(response);
+      })
+      .catch((error) => {
+        alert("error");
+        console.log(error);
+      });
   });
 
   // send pishock config to backend after clicking save button
@@ -109,6 +99,21 @@ $(document).ready(() => {
       .catch((error) => {
         console.log(error);
       });
+  });
+
+  // continue after submitting
+  $(".continue").on("click", () => {
+    if (ended) {
+      $("div").not(".end-game").hide();
+      $(".end-game").show();
+      $(".js-num-correct").text(`Number correct: ${numCorrect}`);
+      $(".js-num-incorrect").text(`Number incorrect: ${numIncorrect}`);
+    } else {
+      $("div").not(".game").hide();
+      $("game").show();
+      $(".game__problem").clear();
+      appendQuestion(); // TODO: switch this with the axios request once we test
+    }
   });
 });
 
@@ -154,9 +159,9 @@ const appendQuestion = (
       $("div").not(".incorrect").hide();
       $(".incorrect").show();
       // make http request to shock user
-      axios.get("/shock");
+      axios.get("http://10.84.133.7:5000/shock");
     }
-    // TODO: test clearing question
+    // clear quesetion after submit
     $(".game__problem").empty();
   });
 };
