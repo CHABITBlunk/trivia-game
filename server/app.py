@@ -18,6 +18,7 @@ question_index = 0
 
 app = Flask(__name__)
 CORS(app)
+app.config["CORS_LOG"] = True
 
 
 @app.route("/config", methods=["POST"])
