@@ -38,9 +38,6 @@ def config():
     return "Player not found"
 
 
-app.route("/player_select", methods=["GET", "POST"])
-
-
 @app.route("/beep", methods=["GET"])
 def beep():
     """beep pishock"""

@@ -61,12 +61,11 @@ $(document).ready(() => {
     axios
       .get(
         "http://192.168.224.157:5000/beep",
-        { name: name },
+        { name },
         {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         },
       )
       .then((response) => {
@@ -85,13 +84,12 @@ $(document).ready(() => {
       .get(
         "http://192.168.224.157:5000/shock_user",
         {
-          name: name,
+          name,
         },
         {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         },
       )
       .then((response) => {
