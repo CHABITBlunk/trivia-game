@@ -1,9 +1,10 @@
 import random
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from game_logic import send_pi_shock_command, load_questions
 
-__name__ = "main"
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # List of questions
 questions = load_questions("./questions.csv")
@@ -16,14 +17,10 @@ players = {
 # Current question index
 question_index = 0
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-app.config["CORS_LOG"] = True
-
 
 @app.route("/config", methods=["POST"])
 def config():
-    """config screen"""
+    """Config screen."""
     config_data = request.json
     player_name = config_data["name"]
     operation = config_data["operation"]
@@ -31,70 +28,53 @@ def config():
     intensity = config_data["intensity"]
 
     if player_name in players:
-        players[player_name]["operation"] = operation
-        players[player_name]["duration"] = duration
-        players[player_name]["intensity"] = intensity
-        return "Player found"
-    return "Player not found"
+        players[player_name].update(
+            {"operation": operation, "duration": duration, "intensity": intensity}
+        )
+        return (
+            jsonify({"status": "success", "message": "Player configuration updated"}),
+            200,
+        )
+    return jsonify({"status": "failure", "message": "Player not found"}), 404
 
 
 @app.route("/beep", methods=["GET"])
 def beep():
-    """beep pishock"""
-    current_player = request.json["name"]
-    send_pi_shock_command(players[current_player]["pi_shock_code"], 2, 1)
-    response = jsonify({"status": "success", "message": "Request successful"})
-    response.headers["Content-Type"] = "application/json"
-    return response
-
-
-def player_select():
-    """select player"""
-    # Store Player Information
-    pass
-
-
-def turn_announcement():
-    """see whose turn it is"""
-    # See who turn it is and display it
-    return render_template("turn_announcement.html", player_id="Insert_id_here")
+    """Beep pishock."""
+    name = request.args.get("name")
+    if name in players:
+        send_pi_shock_command(players[name]["pi_shock_code"], 2, 1)
+        return jsonify({"status": "success", "message": "Beep triggered"}), 200
+    return jsonify({"status": "failure", "message": "Player not found"}), 404
 
 
 @app.route("/question", methods=["GET"])
 def question():
-    """question screen"""
+    """Question screen."""
+    global question_index
     if question_index < len(questions):
         current_question = questions[question_index]
-        # question_index += 1
-        response = {
-            "question": current_question["question"],
-            "answers": current_question["answers"],
-            "correct": current_question["correct"],
-            "ended": False,
-        }
+        question_index += 1  # Move to next question
+        return jsonify(current_question), 200
     else:
-        response = {"data": {"ended": True}}
-    return response
+        return jsonify({"ended": True}), 200
 
 
 @app.route("/shock_user", methods=["GET"])
 def shock_user():
-    current_player = request.json["name"]
-    if current_player in players:
-        player = players[current_player]
+    """Shock user."""
+    name = request.args.get("name")
+    if name in players:
+        player = players[name]
         send_pi_shock_command(
             player["pi_shock_code"],
             player["operation"],
             player["duration"],
             player["intensity"],
         )
-        response = jsonify({"status": "success", "message": "Request successful"})
-        response.headers["Content-Type"] = "application/json"
-    else:
-        response = jsonify({"status": "failure", "message": "Request failure"})
-        response.headers["Content-Type"] = "application/json"
-    return response
+        return jsonify({"status": "success", "message": "Shock sent"}), 200
+    return jsonify({"status": "failure", "message": "Player not found"}), 404
 
 
-if __name__ == "main":
-    app.run(host="192.168.224.157", debug=True)
+if __name__ == "__main__":
+    app.run(host="192.168.224.157", port=5000, debug=True)
