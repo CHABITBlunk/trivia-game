@@ -1,5 +1,6 @@
 import random
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask_cors import CORS
 from game_logic import send_pi_shock_command, load_questions
 
 __name__ = "main"
@@ -16,6 +17,7 @@ players = {
 question_index = 0
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/config", methods=["POST"])

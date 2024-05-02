@@ -32,7 +32,7 @@ $(document).ready(() => {
     appendQuestion();
     // axios request for a question. TODO: test tomorrow
     axios
-      .get("http://10.84.133.7:5050/question")
+      .get("http://192.168.224.157:5050/question")
       .then((response) => {
         ended = response.data.ended;
         if (ended) {
@@ -58,7 +58,7 @@ $(document).ready(() => {
   // test pishock beep
   $(".pishock-config__beep").on("click", () => {
     axios
-      .get("http://10.84.133.7:5000/beep")
+      .get("http://192.168.224.157:5000/beep")
       .then((response) => {
         alert("success!");
         console.log(response);
@@ -72,7 +72,7 @@ $(document).ready(() => {
   // test pishock settings
   $(".pishock-config__test").on("click", () => {
     axios
-      .get("http://10.84.133.7:5000/shock_user", {
+      .get("http://192.168.224.157:5000/shock_user", {
         name: name,
       })
       .then((response) => {
@@ -89,7 +89,7 @@ $(document).ready(() => {
   $(".js-save").on("click", () => {
     name = $(".pishock-config__name").val();
     axios
-      .post("/pishock-config", {
+      .post("http://192.168.224.157:5000/config", {
         name: $(".pishock-config__name").val(),
         operation: $(".pishock-config__operation").val(),
         duration: $(".pishock-config__duration").val(),
@@ -161,7 +161,7 @@ const appendQuestion = (
       $("div").not(".incorrect").hide();
       $(".incorrect").show();
       // make http request to shock user
-      axios.get("http://10.84.133.7:5000/shock_user", {
+      axios.get("http://192.168.224.157:5000/shock_user", {
         name: name,
       });
     }
