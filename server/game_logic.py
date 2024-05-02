@@ -90,17 +90,20 @@ def send_pi_shock_command(self, op, duration, intensity=None):
 
     """
     payload = {
-        "Username": self.username,
-        "Apikey": self.apikey,
-        "Code": self.code,
-        "Name": self.name,
+        "Username": "nbrady387",
+        "Apikey": "12aa6efc-9c0f-46e7-a154-f8aa70d67ba4",
+        "Code": "2C48E5F36C4",
+        "Name": "TG_Bot_Script",
         "Op": op,
         "Duration": duration,
     }
     if intensity is not None:
         payload["Intensity"] = intensity
-
-    response = requests.post(self.base_url, json=payload, headers=self.headers)
+    response = requests.post(
+        "https://do.pishock.com/api/apioperate/",
+        json=payload,
+        headers={"Content-Type": "application/json"},
+    )
     print(response.text)
 
 

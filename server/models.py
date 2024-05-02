@@ -1,17 +1,25 @@
 class Player:
     """
+    <<<<<<< HEAD
 
-    Represents a player in the game and the assocaited PiShock Settings
+        Represents a player in the game and the assocaited PiShock Settings
 
-    Variables:
+        Variables:
 
-        player_name (str): name of the player.
-        player_score (int): current score of the player, initially 0.
-        num_incorrect (int): number of  incorrect answers the player has, initally 0
-        pi_shock_setting (tuple): PiShock settings (operation, duration, intensity).
-        pi_shock_code (str): Unique code to identify the PiShock device for this player.
-        intensity_scale (bool): determine if intensity scales with incorrect answers.
+    =======
+        Represents a player in the game and the assocaited PiShock Settings
+        Variables:
+    >>>>>>> 75fa3fd2a1c35d055a369df1567c03e3b711606f
+            player_name (str): name of the player.
+            player_score (int): current score of the player, initially 0.
+            num_incorrect (int): number of  incorrect answers the player has, initally 0
+            pi_shock_setting (tuple): PiShock settings (operation, duration, intensity).
+            pi_shock_code (str): Unique code to identify the PiShock device for this player.
+            intensity_scale (bool): determine if intensity scales with incorrect answers.
+    <<<<<<< HEAD
 
+    =======
+    >>>>>>> 75fa3fd2a1c35d055a369df1567c03e3b711606f
     """
 
     def __init__(self, name, pi_shock_code, pi_shock_setting=(0, 0, 0)):
@@ -43,21 +51,16 @@ class Player:
 
     def update_pi_shock_settings(self, settings):
         """
-
         Change the PiShock setting for this player
-
         Args:
             setting(tuple): A tuple containing the new operation, duration, and intensity PiShock settings
-
         """
-
         self.pi_shock_settings = settings
 
 
 class PiShockConfig:
     """
     Configuration for the PiShock device API access.
-
     Variable:
         username (str): Username for PiShock API authentication.
         apikey (str): API key for PiShock API authentication.
@@ -65,7 +68,6 @@ class PiShockConfig:
         name (str): Optional name for the script or application using the API, default 'TG_Bot_Script'.
         base_url (str): Base URL for the PiShock API operations.
         headers (dict): Headers to be used for API requests, defaulting to JSON content type.
-
     """
 
     def __init__(

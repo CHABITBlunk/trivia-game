@@ -1,3 +1,4 @@
 Flask
-pylint
+Flask-CORS
 requests
+pylint
