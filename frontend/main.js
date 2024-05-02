@@ -58,7 +58,16 @@ $(document).ready(() => {
   // test pishock beep
   $(".pishock-config__beep").on("click", () => {
     axios
-      .get("http://192.168.224.157:5000/beep")
+      .get(
+        "http://192.168.224.157:5000/beep",
+        { name: name },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        },
+      )
       .then((response) => {
         alert("success!");
         console.log(response);
@@ -72,9 +81,18 @@ $(document).ready(() => {
   // test pishock settings
   $(".pishock-config__test").on("click", () => {
     axios
-      .get("http://192.168.224.157:5000/shock_user", {
-        name: name,
-      })
+      .get(
+        "http://192.168.224.157:5000/shock_user",
+        {
+          name: name,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        },
+      )
       .then((response) => {
         alert("success!");
         console.log(response);
@@ -89,12 +107,21 @@ $(document).ready(() => {
   $(".js-save").on("click", () => {
     name = $(".pishock-config__name").val();
     axios
-      .post("http://192.168.224.157:5000/config", {
-        name: $(".pishock-config__name").val(),
-        operation: $(".pishock-config__operation").val(),
-        duration: $(".pishock-config__duration").val(),
-        intensity: $(".pishock-config__intensity").val(),
-      })
+      .post(
+        "http://192.168.224.157:5000/config",
+        {
+          name: $(".pishock-config__name").val(),
+          operation: $(".pishock-config__operation").val(),
+          duration: $(".pishock-config__duration").val(),
+          intensity: $(".pishock-config__intensity").val(),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        },
+      )
       .then((response) => {
         alert("successfully saved!");
       })

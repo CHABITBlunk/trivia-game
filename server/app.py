@@ -1,6 +1,6 @@
 import random
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from game_logic import send_pi_shock_command, load_questions
 
 __name__ = "main"
@@ -17,11 +17,12 @@ players = {
 question_index = 0
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, support_credentials=True)
 app.config["CORS_LOG"] = True
 
 
 @app.route("/config", methods=["POST"])
+@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
 def config():
     """config screen"""
     config_data = request.json
@@ -42,6 +43,7 @@ app.route("/player_select", methods=["GET", "POST"])
 
 
 @app.route("/beep", methods=["GET"])
+@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
 def beep():
     """beep pishock"""
     current_player = request.json["name"]
@@ -64,6 +66,7 @@ def turn_announcement():
 
 
 @app.route("/question", methods=["GET"])
+@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
 def question():
     """question screen"""
     if question_index < len(questions):
@@ -83,6 +86,7 @@ def question():
 
 
 @app.route("/shock_user", methods=["GET"])
+@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
 def shock_user():
     current_player = request.json["name"]
     if current_player in players:
