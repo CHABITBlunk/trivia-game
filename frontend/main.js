@@ -32,9 +32,10 @@ $(document).ready(() => {
     appendQuestion();
     // axios request for a question. TODO: test tomorrow
     axios
-      .get("http://192.168.224.157:5050/question")
+      .get("http://192.168.224.157:5000/question")
       .then((response) => {
         ended = response.data.ended;
+        console.log(response);
         if (ended) {
           $("div").not(".end-game").hide();
           $(".end-game").show();

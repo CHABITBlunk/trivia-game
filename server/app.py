@@ -70,12 +70,10 @@ def question():
         current_question = questions[question_index]
         # question_index += 1
         response = {
-            "data": {
-                "question": current_question["question"],
-                "answers": current_question["answers"],
-                "correct": current_question["correct"],
-                "ended": False,
-            }
+            "question": current_question["question"],
+            "answers": current_question["answers"],
+            "correct": current_question["correct"],
+            "ended": False,
         }
     else:
         response = {"data": {"ended": True}}
