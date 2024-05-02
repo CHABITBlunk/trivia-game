@@ -22,7 +22,9 @@ app.config["CORS_LOG"] = True
 
 
 @app.route("/config", methods=["POST"])
-@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
+@cross_origin(
+    origin="*", methods=["POST", "OPTIONS"], allow_headers="Content-Type,Authorization"
+)
 def config():
     """config screen"""
     config_data = request.json
@@ -43,7 +45,9 @@ app.route("/player_select", methods=["GET", "POST"])
 
 
 @app.route("/beep", methods=["GET"])
-@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
+@cross_origin(
+    origin="*", methods=["POST", "OPTIONS"], allow_headers="Content-Type,Authorization"
+)
 def beep():
     """beep pishock"""
     current_player = request.json["name"]
@@ -66,7 +70,9 @@ def turn_announcement():
 
 
 @app.route("/question", methods=["GET"])
-@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
+@cross_origin(
+    origin="*", methods=["POST", "OPTIONS"], allow_headers="Content-Type,Authorization"
+)
 def question():
     """question screen"""
     if question_index < len(questions):
@@ -86,7 +92,9 @@ def question():
 
 
 @app.route("/shock_user", methods=["GET"])
-@cross_origin(origin="*", headers=["Content-Type", "Authorizatoin"])
+@cross_origin(
+    origin="*", methods=["POST", "OPTIONS"], allow_headers="Content-Type,Authorization"
+)
 def shock_user():
     current_player = request.json["name"]
     if current_player in players:
