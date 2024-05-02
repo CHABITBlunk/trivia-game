@@ -28,7 +28,7 @@ def config():
     intensity = config_data["intensity"]
 
     if player_name in players:
-        players[player_name].pi_shock_setting = (operation, duration, intensity)
+        players[player_name]["pi_shock_setting"] = (operation, duration, intensity)
         return "Player found"
     else:
         return "Player not found"
@@ -63,6 +63,7 @@ def question():
     """question screen"""
     if question_index < len(questions):
         current_question = questions[question_index]
+        # question_index += 1
         response = {
             "data": {
                 "question": current_question["question"],
@@ -78,15 +79,15 @@ def question():
 
 @app.route("/shock_user", methods=["GET"])
 def shock_user():
-    global current_player
-    if current_player in players:
-        player = players[current_player]
-        send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
-        response = jsonify({"status": "success", "message": "Request successful"})
-        response.headers["Content-Type"] = "application/json"
-    else:
-        response = jsonify({"status": "failure", "message": "Request failure"})
-        response.headers["Content-Type"] = "application/json"
+    # global current_player
+    # if current_player in players:
+    # player = players[current_player]
+    send_pi_shock_command(player.pi_shock_code, *player.pi_shock_setting)
+    response = jsonify({"status": "success", "message": "Request successful"})
+    response.headers["Content-Type"] = "application/json"
+    # else:
+    # response = jsonify({"status": "failure", "message": "Request failure"})
+    # response.headers["Content-Type"] = "application/json"
     return response
 
 
